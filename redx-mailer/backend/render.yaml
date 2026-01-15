@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: redx-mailer-backend
+    env: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: SPREADSHEET_ID
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
+      # Set Google Service Account JSON as environment variable (recommended)
+      - key: GOOGLE_SERVICE_ACCOUNT_JSON
+        sync: false
+      # OR use file path if you want to mount it
+      # - key: GOOGLE_SERVICE_ACCOUNT
+      #   value: /root/service-account.json
+      - key: ALLOW_ORIGIN
+        value: "*"
+    healthCheckPath: /health
+    autoDeploy: true
+    disk:
+      name: data
+      mountPath: /data
+      sizeGB: 10
